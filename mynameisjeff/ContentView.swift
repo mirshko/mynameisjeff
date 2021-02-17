@@ -17,31 +17,35 @@ struct Section: View {
         }
         .font(.headline)
         .padding()
-        .background(Color.white)
-        .foregroundColor(.black)
+        .background(Color(.systemGray5))
+        .foregroundColor(.primary)
         .cornerRadius(16)
     }
 }
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            ScrollView() {
-                Section(text: "Jeff Reiner")
+        ZStack {
+            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+
+            VStack {
+                ScrollView() {
+                    Section(text: "Jeff Reiner")
+                    
+                    Section(text: "I'm currently freelancing as a design engineer located in Berlin, as well as working on frontend at Union and design at Soapbox.")
+                    
+                    Section(text: "I focus on engaging, responsive, mobile-first websites and apps; highly-usable and efficient design systems; and solving complex UX problems, in and around the Web 2.0 and Web3 space.")
+                    
+                    
+                    
+                }.cornerRadius(16)
                 
-                Section(text: "I'm currently freelancing as a design engineer located in Berlin, as well as working on frontend at Union and design at Soapbox.")
-                
-                Section(text: "I focus on engaging, responsive, mobile-first websites and apps; highly-usable and efficient design systems; and solving complex UX problems, in and around the Web 2.0 and Web3 space.")
-                
-                
-                
-            }.cornerRadius(16)
-            
-            HStack(alignment: .center) {
-                Link(destination: URL(string: "https://twitter.com/mirshko")!, label: {
-                    Text("JEFF").font(.largeTitle).bold().foregroundColor(.primary)
-                })
-            }.padding()
+                HStack(alignment: .center) {
+                    Link(destination: URL(string: "https://twitter.com/mirshko")!, label: {
+                        Text("JEFF").font(.largeTitle).bold().foregroundColor(.primary)
+                    })
+                }.padding()
+            }
         }
     }
 }
