@@ -35,10 +35,7 @@ struct ContentView: View {
                     Section(text: "I'm currently freelancing as a design engineer located in Berlin, as well as working on frontend at Union and design at Soapbox.")
                     
                     Section(text: "I focus on engaging, responsive, mobile-first websites and apps; highly-usable and efficient design systems; and solving complex UX problems, in and around the Web 2.0 and Web3 space.")
-                    
-                    
-                    
-                }.cornerRadius(16)
+                }.cornerRadius(16).padding()
                 
                 HStack(alignment: .center) {
                     Link(destination: URL(string: "https://twitter.com/mirshko")!, label: {
