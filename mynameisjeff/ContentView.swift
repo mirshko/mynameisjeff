@@ -140,23 +140,65 @@ struct MoodsSection: View {
 }
 
 struct SubscriptionsSection: View {
-    init() {
-        UINavigationBar.appearance().backgroundColor = .systemBackground
-    }
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     var body: some View {
-        VStack {
-            
-            HStack {
-                Text("Rent")
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("⬅️ Back")
+                }
+                
+                HStack {
+                    Text("Subscriptions").fontWeight(.bold)
+                    
+                    Spacer()
+                }
+                
+                ForEach((1...10), id: \.self) { _ in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("🏡 Rent").font(.headline).bold()
+                            
+                            Text("€467.32").font(.callout)
+                            
+                            HStack(spacing: 8) {
+                                Text("Monthly")
+                                    .font(.caption)
+                                    .bold()
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color(.systemGray5))
+                                    .cornerRadius(4)
+                                
+                                Text("Direct Debit")
+                                    .font(.caption)
+                                    .bold()
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color("N26").opacity(0.5))
+                                    .cornerRadius(4)
+                            }
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding(16)
+                    .foregroundColor(.primary)
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8).stroke(Color(.systemGray4), lineWidth: 1)
+                    )
+                }
                 
                 Spacer()
+
             }
-            
-            Spacer()
+            .padding()
         }
-        .padding()
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
     }
 }
 
@@ -164,14 +206,20 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ScrollView() {
-                VStack(spacing: 16) {
-                    NavigationLink(destination: MoodsSection()) {
-                        Section(text: "Moods 🌞")
+                VStack(alignment: .leading, spacing: 16) {
+                    HStack {
+                        Text("Internal").fontWeight(.bold)
+                        
+                        Spacer()
                     }
                     
                     NavigationLink(destination: SubscriptionsSection()) {
                         Section(text: "Subscriptions 💸")
                     }
+                    
+                    Section(text: "Moods 🌞")
+                    
+                    Section(text: "Tools 🛠")
                 }.padding()
             }
             .navigationBarHidden(true)
