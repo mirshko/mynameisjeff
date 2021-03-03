@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		1F15020224E80200000B34F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15020124E80200000B34F3 /* ContentView.swift */; };
 		1F15020424E80201000B34F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F15020324E80201000B34F3 /* Assets.xcassets */; };
 		1F15020724E80201000B34F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F15020624E80201000B34F3 /* Preview Assets.xcassets */; };
+		1F59C8C525F035770075C6BD /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 1F59C8C425F035770075C6BD /* BottomSheet */; };
 		1FA5EB9A25F006C900241345 /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA5EB9925F006C900241345 /* SubscriptionsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F59C8C525F035770075C6BD /* BottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +125,9 @@
 			dependencies = (
 			);
 			name = mynameisjeff;
+			packageProductDependencies = (
+				1F59C8C425F035770075C6BD /* BottomSheet */,
+			);
 			productName = mynameisjeff;
 			productReference = 1F1501FC24E80200000B34F3 /* mynameisjeff.app */;
 			productType = "com.apple.product-type.application";
@@ -194,6 +199,9 @@
 				Base,
 			);
 			mainGroup = 1F1501F324E80200000B34F3;
+			packageReferences = (
+				1F59C8C325F035770075C6BD /* XCRemoteSwiftPackageReference "BottomSheet" */,
+			);
 			productRefGroup = 1F1501FD24E80200000B34F3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -394,7 +402,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"mynameisjeff/Preview Content\"";
 				DEVELOPMENT_TEAM = VD2XEMH9RU;
 				ENABLE_PREVIEWS = YES;
@@ -417,7 +425,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"mynameisjeff/Preview Content\"";
 				DEVELOPMENT_TEAM = VD2XEMH9RU;
 				ENABLE_PREVIEWS = YES;
@@ -558,6 +566,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1F59C8C325F035770075C6BD /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LucasMucGH/BottomSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1F59C8C425F035770075C6BD /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F59C8C325F035770075C6BD /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1F1501F424E80200000B34F3 /* Project object */;
 }

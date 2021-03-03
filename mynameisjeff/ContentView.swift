@@ -7,62 +7,6 @@
 
 import SwiftUI
 
-
-struct Mood: Decodable, Hashable, Identifiable {
-    let id: Int
-    let timestamp: String
-    let mood: String
-}
-
-struct Payload: Decodable {
-    let datas: [Mood]
-}
-
-struct API {
-    let baseURL = URL(string: "https://api.sheety.co/c869389178ef5915c2a748411733f36f/logMoodShortcut/datas")
-    
-    // create our fetch function with a responder handler callback
-    func fetch (handler: @escaping (Result<Payload, Error>) -> Void) {
-        
-        // ensure that our url is unpacked
-        guard let url = baseURL else {
-            print("error...")
-            return
-        }
-        
-        // use URLSession to fetch our data
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            
-            // handle network errors
-            if let error = error {
-                handler(.failure(error))
-            } else {
-                
-                // attempt to decode our JSON
-                do {
-                    // attempt to decode
-                    let encoder = JSONDecoder()
-                    
-                    // convert any snake_case to camelCase
-                    encoder.keyDecodingStrategy = .convertFromSnakeCase
-                    
-                    let data = data ?? Data()
-                    
-                    let moods = try encoder.decode(Payload.self, from: data)
-                    
-                    handler(.success(moods))
-                } catch {
-                    handler(.failure(error))
-                }
-                
-            }
-            
-        }
-        
-        task.resume()
-    }
-}
-
 struct Section: View {
     var text: String
     
@@ -88,22 +32,18 @@ struct ContentView: View {
         NavigationView {
             ScrollView() {
                 VStack(alignment: .leading, spacing: 16) {
-                    HStack {
-                        Text("Internal").fontWeight(.bold)
-                        
-                        Spacer()
-                    }
-                    
                     NavigationLink(destination: SubscriptionsView()) {
                         Section(text: "Subscriptions 💸")
                     }
                     
-                    Section(text: "Moods 🌞")
+//                    Section(text: "Moods 🌞")
                     
-                    Section(text: "Tools 🛠")
+                    Link(destination: URL(string: "https://twitter.com/mirshko")!) {
+                        Section(text: "Twitter 🕊")
+                    }
                 }.padding()
             }
-            .navigationBarHidden(true)
+            .navigationBarTitle("Internal")
         }
         .accentColor(.primary)
     }

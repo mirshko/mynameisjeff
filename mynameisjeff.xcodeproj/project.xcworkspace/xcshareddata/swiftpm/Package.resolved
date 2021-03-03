@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BottomSheet",
+        "repositoryURL": "https://github.com/LucasMucGH/BottomSheet",
+        "state": {
+          "branch": null,
+          "revision": "39e70dd4db2a8e4955284875dbdea08adc570988",
+          "version": "1.0.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
