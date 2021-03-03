@@ -140,8 +140,13 @@ struct MoodsSection: View {
 }
 
 struct SubscriptionsSection: View {
+    init() {
+        UINavigationBar.appearance().backgroundColor = .systemBackground
+    }
+    
     var body: some View {
         VStack {
+            
             HStack {
                 Text("Rent")
                 
@@ -149,32 +154,27 @@ struct SubscriptionsSection: View {
             }
             
             Spacer()
-        }.padding()
+        }
+        .padding()
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct ContentView: View {
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                NavigationLink(destination: MoodsSection()) {
-                    Section(text: "Moods 🌞")
-                }
-                
-                NavigationLink(destination: SubscriptionsSection()) {
-                    Section(text: "Subscriptions 💸")
-                }
-                
-                Spacer()
+            ScrollView() {
+                VStack(spacing: 16) {
+                    NavigationLink(destination: MoodsSection()) {
+                        Section(text: "Moods 🌞")
+                    }
+                    
+                    NavigationLink(destination: SubscriptionsSection()) {
+                        Section(text: "Subscriptions 💸")
+                    }
+                }.padding()
             }
-            .padding()
-            .navigationBarTitle("Internal", displayMode: .large)
-            .navigationBarItems(trailing:
-                Link(
-                    destination: URL(string: "https://twitter.com/mirshko")!,
-                    label: { Text("Twitter") }
-                )
-            )
+            .navigationBarHidden(true)
         }
         .accentColor(.primary)
     }
