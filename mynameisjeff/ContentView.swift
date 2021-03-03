@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct Mood: Decodable, Hashable {
+struct Mood: Decodable, Hashable, Identifiable {
     let id: Int
     let timestamp: String
     let mood: String
@@ -70,44 +70,22 @@ struct Section: View {
     
     var body: some View {
         HStack() {
-            Text(text)
+            Text(text).bold()
+            
             Spacer()
         }
         .font(.headline)
-        .padding()
-        .background(Color(.systemGray5))
+        .padding(24)
         .foregroundColor(.primary)
-        .cornerRadius(16)
+        .cornerRadius(8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8).stroke(Color(.systemGray4), lineWidth: 1)
+        )
+        
     }
 }
 
-struct MoodSection: View {
-    static let dateFormatter = DateFormatter()
-    static let relativeFormatter = RelativeDateTimeFormatter()
-    
-    var mood: Mood
-    
-    
-    
-    var body: some View {
-        
-//        Self.dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-//
-//        Self.relativeFormatter.unitsStyle = .full
-//
-//        let relativeDate = Self.relativeFormatter.localizedString(for: Self.dateFormatter.date(from: mood.timestamp)!, relativeTo: Date())
-        
-        return HStack() {
-            VStack(alignment: .leading) {
-                Text(mood.mood)
-                Text("\(mood.timestamp)")
-            }
-            Spacer()
-        }
-    }
-}
-
-struct ContentView: View {
+struct MoodsSection: View {
     @State var loading = false
     @State var error = false
     @State var moods: Payload?
@@ -131,31 +109,74 @@ struct ContentView: View {
     }
     
     var body: some View {
-        ZStack {
-            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+        VStack(spacing: 0) {
+            if (loading) {
+                Text("Loading")
+                    .font(.largeTitle)
+                    .bold()
+            }
             
-            VStack(spacing: 0) {
-                ScrollView() {
-                    Section(text: "Jeff Reiner")
-                    
-                    Section(text: "I'm currently freelancing as a design engineer located in Berlin, as well as working on frontend at Union and design at Soapbox.")
-                    
-                    Section(text: "I focus on engaging, responsive, mobile-first websites and apps; highly-usable and efficient design systems; and solving complex UX problems, in and around the Web 2.0 and Web3 space.")
-                    
-                    if (moods != nil) {
-                        ForEach(moods!.datas, id: \.self) {
-                            MoodSection(mood: $0)
+            if (error) {
+                Text("Error")
+                    .foregroundColor(Color(.systemRed))
+                    .font(.largeTitle)
+                    .bold()
+            }
+            
+            if (moods != nil) {
+                ScrollView {
+                    ForEach(moods!.datas) { mood in
+                        HStack {
+                            Text(mood.mood)
+                            
+                            Spacer()
                         }
                     }
-                }.cornerRadius(16).padding()
-                
-                HStack(alignment: .center) {
-                    Link(destination: URL(string: "https://twitter.com/mirshko")!, label: {
-                        Text("MOODS").font(.largeTitle).bold().foregroundColor(.primary)
-                    })
-                }.padding()
+                }
             }
-        }.onAppear(perform: fetch)
+        }
+        .onAppear(perform: fetch)
+    }
+}
+
+struct SubscriptionsSection: View {
+    var body: some View {
+        VStack {
+            HStack {
+                Text("Rent")
+                
+                Spacer()
+            }
+            
+            Spacer()
+        }.padding()
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 16) {
+                NavigationLink(destination: MoodsSection()) {
+                    Section(text: "Moods 🌞")
+                }
+                
+                NavigationLink(destination: SubscriptionsSection()) {
+                    Section(text: "Subscriptions 💸")
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .navigationBarTitle("Internal", displayMode: .large)
+            .navigationBarItems(trailing:
+                Link(
+                    destination: URL(string: "https://twitter.com/mirshko")!,
+                    label: { Text("Twitter") }
+                )
+            )
+        }
+        .accentColor(.primary)
     }
 }
 
