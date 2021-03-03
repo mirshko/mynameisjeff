@@ -63,8 +63,6 @@ struct API {
     }
 }
 
-
-
 struct Section: View {
     var text: String
     
@@ -85,123 +83,6 @@ struct Section: View {
     }
 }
 
-struct MoodsSection: View {
-    @State var loading = false
-    @State var error = false
-    @State var moods: Payload?
-    
-    func fetch () {
-        loading = true
-        error = false
-        
-        API().fetch() { result in
-            self.loading = false
-            
-            // handle success or failure
-            switch result {
-            case .success(let moods):
-                print("Success! \(moods)")
-                self.moods = moods
-                
-            case .failure: self.error = true
-            }
-        }
-    }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            if (loading) {
-                Text("Loading")
-                    .font(.largeTitle)
-                    .bold()
-            }
-            
-            if (error) {
-                Text("Error")
-                    .foregroundColor(Color(.systemRed))
-                    .font(.largeTitle)
-                    .bold()
-            }
-            
-            if (moods != nil) {
-                ScrollView {
-                    ForEach(moods!.datas) { mood in
-                        HStack {
-                            Text(mood.mood)
-                            
-                            Spacer()
-                        }
-                    }
-                }
-            }
-        }
-        .onAppear(perform: fetch)
-    }
-}
-
-struct SubscriptionsSection: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("⬅️ Back")
-                }
-                
-                HStack {
-                    Text("Subscriptions").fontWeight(.bold)
-                    
-                    Spacer()
-                }
-                
-                ForEach((1...10), id: \.self) { _ in
-                    HStack {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("🏡 Rent").font(.headline).bold()
-                            
-                            Text("€467.32").font(.callout)
-                            
-                            HStack(spacing: 8) {
-                                Text("Monthly")
-                                    .font(.caption)
-                                    .bold()
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(Color(.systemGray5))
-                                    .cornerRadius(4)
-                                
-                                Text("Direct Debit")
-                                    .font(.caption)
-                                    .bold()
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(Color("N26").opacity(0.5))
-                                    .cornerRadius(4)
-                            }
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding(16)
-                    .foregroundColor(.primary)
-                    .cornerRadius(8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8).stroke(Color(.systemGray4), lineWidth: 1)
-                    )
-                }
-                
-                Spacer()
-
-            }
-            .padding()
-        }
-        .navigationBarHidden(true)
-    }
-}
-
 struct ContentView: View {
     var body: some View {
         NavigationView {
@@ -213,7 +94,7 @@ struct ContentView: View {
                         Spacer()
                     }
                     
-                    NavigationLink(destination: SubscriptionsSection()) {
+                    NavigationLink(destination: SubscriptionsView()) {
                         Section(text: "Subscriptions 💸")
                     }
                     
