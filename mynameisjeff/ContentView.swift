@@ -35,15 +35,16 @@ struct ContentView: View {
                     NavigationLink(destination: SubscriptionsView()) {
                         Section(text: "Subscriptions 💸")
                     }
-                    
-//                    Section(text: "Moods 🌞")
-                    
+                                        
                     Link(destination: URL(string: "https://twitter.com/mirshko")!) {
                         Section(text: "Twitter 🕊")
                     }
+                    
+                    Spacer()
                 }.padding()
             }
             .navigationBarTitle("Internal")
+            .navigationBarTitleDisplayMode(.large)
         }
         .accentColor(.primary)
     }

@@ -6,163 +6,152 @@
 //
 
 import SwiftUI
-import BottomSheet
 
-struct SubscriptionDetails: View {
+struct SubscriptionDetailsModalView: View {
     var body: some View {
         Capsule()
             .fill(Color(.tertiaryLabel))
             .frame(width: 36, height: 5)
             .padding(5)
         
-        VStack(alignment: .leading) {
+        VStack(spacing: 16) {
+            HStack {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("🏡").font(.system(size: 80))
+                    
+                    Text("Rent").font(.largeTitle).bold()
+                }
+                
+                Spacer()
+            }
             
-            Text("🏡 Rent").font(.headline).bold()
+            Divider()
+            
+            VStack(alignment: .leading, spacing: 24) {
+                HStack {
+                    Text("Cost").foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    Text("€467.32")
+                }
+                
+                HStack {
+                    Text("Billing Method").foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    Text("Direct Debit")
+                        .font(.callout)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color("N26").opacity(0.5))
+                        .cornerRadius(4)
+                }
+                
+                HStack {
+                    Text("Cycle").foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    Text("Monthly")
+                        .font(.callout)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color(.systemGray5))
+                        .cornerRadius(4)
+                }
+                
+                HStack {
+                    Text("Tags").foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    HStack(spacing: 8) {
+                        Text("Essentials")
+                            .font(.callout)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color(.systemBlue).opacity(0.2))
+                            .cornerRadius(4)
+                        
+                        Text("Business")
+                            .font(.callout)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color(.systemYellow).opacity(0.2))
+                            .cornerRadius(4)
+                    }
+                }
+            }
             
             Spacer()
-            
-            
-            Spacer()
-        }.padding()
+        }
+        .padding(.horizontal)
     }
 }
 
 struct Subscription: View {
-    
+    @State private var showModal = false
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("🏡 Rent").font(.headline).bold()
-                
-                Text("€467.32").font(.callout)
-                
-                HStack(spacing: 8) {
-                    Text("Monthly")
-                        .font(.caption)
-                        .bold()
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color(.systemGray5))
-                        .cornerRadius(4)
+        Button(
+            action: {
+                self.showModal = true
+            },
+            label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("🏡 Rent").font(.title3).bold()
+                        
+                        Text("€467.32").font(.body)
+                        
+                        HStack(spacing: 8) {
+                            Text("Monthly")
+                                .font(.callout)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color(.systemGray5))
+                                .cornerRadius(4)
+                            
+                            Text("Direct Debit")
+                                .font(.callout)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color("N26").opacity(0.5))
+                                .cornerRadius(4)
+                        }
+                    }
                     
-                    Text("Direct Debit")
-                        .font(.caption)
-                        .bold()
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color("N26").opacity(0.5))
-                        .cornerRadius(4)
-                }
+                    Spacer()
+                }.padding(16)
+                .foregroundColor(.primary)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8).stroke(Color(.systemGray4), lineWidth: 1)
+                )
             }
-            
-            Spacer()
-        }.padding(16)
-        .foregroundColor(.primary)
-        .cornerRadius(8)
-        .overlay(
-            RoundedRectangle(cornerRadius: 8).stroke(Color(.systemGray4), lineWidth: 1)
         )
+        .sheet(isPresented: $showModal, onDismiss: {
+            print(self.showModal)
+        }) {
+            SubscriptionDetailsModalView()
+        }
     }
 }
 
 struct SubscriptionsView: View {
-//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    @State private var bottomSheetPosition: BottomSheetPosition = .hidden
-    
-    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-//                Button(action: {
-//                    presentationMode.wrappedValue.dismiss()
-//                }) {
-//                    Text("⬅️ Back").foregroundColor(.primary)
-//                }
-                
-//                HStack {
-//                    Text("Subscriptions").font(.largeTitle).fontWeight(.bold)
-//
-//                    Spacer()
-//                }
-                
-                ForEach((1...5), id: \.self) { _ in
-                    Button(action: {
-                        withAnimation(.linear) {
-                            self.bottomSheetPosition = .middle
-                        }
-                    }, label: {
-                        Subscription()
-                    })
+                ForEach((1...10), id: \.self) { _ in
+                    Subscription()
                 }
                 
                 Spacer()
-                
             }
             .padding()
-            
         }
-        .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, showCancelButton: true, content: {
-            VStack {
-                HStack {
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("🏡").font(.system(size: 80))
-                        
-                        Text("Rent").font(.largeTitle).bold()
-                    }
-                    
-                    Spacer()
-                }
-                
-                VStack {
-                    Divider()
-                }.padding(.vertical, 16)
-                
-                VStack(alignment: .leading, spacing: 24) {
-                    HStack {
-                        Text("Cost").font(.title3).foregroundColor(.secondary)
-                        
-                        Spacer()
-                        
-                        Text("€467.32")
-                    }
-                    
-                    HStack {
-                        Text("Billing Method").font(.title3).foregroundColor(.secondary)
-                        
-                        Spacer()
-                        
-                        Text("Direct Debit")
-                            .bold()
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color("N26").opacity(0.5))
-                            .cornerRadius(4)
-                    }
-                    
-                    HStack {
-                        Text("Cycle").font(.title3).foregroundColor(.secondary)
-                        
-                        Spacer()
-                        
-                        Text("Monthly")
-                            .bold()
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color(.systemGray5))
-                            .cornerRadius(4)
-                    }
-                }
-                
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .padding(.top, -56)
-        }, closeAction: {
-            self.bottomSheetPosition = .hidden
-        })
         .navigationBarTitle("Subscriptions")
         .navigationBarTitleDisplayMode(.large)
     }
